@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>Previous Matches</h2>
+<p th:text="'Hello, ' + ${name} + '!'" />
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Opponent</th>
+            <th>Score</th>
+            <th>Result</th>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td>Opponent</td>
+            <td>Score</th>
+            <td>Result</th>
+        </tr>
+        <tr>
+            <td></td>Date</td>
+            <td>Opponent</td>
+            <td>Score</td>
+            <td>Result</td>
+        </tr>
+    </thead>
+    <tbody id="match-details">
+        <!-- Match details will be displayed here -->
+    </tbody>
+</table>
+
+<script>
+    function showMatchDetails(selectElement) {
+        const selectedMatch = selectElement.value;
+        const matchDetailsTable = document.getElementById("match-details");
+    }
+</script>
+
+
+</body>
+</html>
