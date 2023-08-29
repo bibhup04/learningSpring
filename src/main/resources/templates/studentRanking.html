@@ -2,46 +2,129 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Student Data</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+    }
+
+    table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .edit-button, .del-button {
+        padding: 5px 10px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+
+    .edit-button:hover, .del-button:hover {
+        background-color: #0056b3;
+    }
+
+    .add-button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .add-button:hover {
+        background-color: #1f9239;
+    }
+
+    .insert-Data {
+        text-align: center;
+        margin: 20px auto;
+    }
+
+    input[type="text"] {
+        padding: 8px;
+        width: 150px;
+    }
+
+    input[type="submit"] {
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
 <body>
-<h2>Previous Matches</h2>
-<p th:text="'Hello, ' + ${name} + '!'" />
 
-
-<table>
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Opponent</th>
-            <th>Score</th>
-            <th>Result</th>
-        </tr>
-        <tr>
-            <td>Date</td>
-            <td>Opponent</td>
-            <td>Score</th>
-            <td>Result</th>
-        </tr>
-        <tr>
-            <td></td>Date</td>
-            <td>Opponent</td>
-            <td>Score</td>
-            <td>Result</td>
-        </tr>
-    </thead>
-    <tbody id="match-details">
-        <!-- Match details will be displayed here -->
-    </tbody>
-</table>
-
-<script>
-    function showMatchDetails(selectElement) {
-        const selectedMatch = selectElement.value;
-        const matchDetailsTable = document.getElementById("match-details");
-    }
-</script>
-
-
+	<h1>STUDENT RANKING</h1>
+	<div class="Table-content">
+	    <table border="1">
+			<tr>
+		        <th>Rank</th>
+		        <th>Name</th>
+		        <th>Score</th>
+		        <th>Edit</th>
+		        <th>Delete</th>
+		    </tr>
+	        <tr th:each="innerList, innerListIndex : ${twoDArrayList}">
+			    <td th:text="${innerListIndex.index + 1}"></td>
+			    <span th:each="item : ${innerList}">
+			        <td><span th:text="${item}"></span></td>
+			    </span>
+			    <td>
+				    <form th:action="@{/editStudent}" method="post">
+				        <input type="hidden" name="index" th:value="${innerListIndex.index}">
+				        <button class="edit-button" type="submit">Edit</button>
+				    </form>
+				</td>
+	
+			    <td>
+				    <form th:action="@{/deleteStudent}" method="post">
+				        <input type="hidden" name="index" th:value="${innerListIndex.index}">
+				        <button class="del-button" type="submit">Delete</button>
+				    </form>
+				</td>
+	
+			</tr>
+	
+	    </table>
+    </div>
+    <div class="insert-Data">
+	    <form action="/studentRanking" method="post">
+		<input type="text" id="p1name" name="p1name" placeholder="Student Name">
+		<input type="text" id="p1score" name="p1score" placeholder="Student Score">
+		<button class="add-button" type="submit">Add Details</button>
+	</div>
+</form>
 </body>
+
+ 
 </html>
