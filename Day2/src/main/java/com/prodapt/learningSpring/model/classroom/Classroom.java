@@ -1,13 +1,15 @@
 package com.prodapt.learningSpring.model.classroom;
 
 
-import java.sql.SQLException;
+import java.sql.SQLException; 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
+
+import com.prodapt.learningSpring.model.students.Students;
 
 @Component
 public class Classroom {
@@ -34,9 +36,23 @@ public class Classroom {
         students.get(i).setRank(students.get(i-1).getRank());
     }
   }
+  
+  public int updateID() {
+		int maxId = 0;
+    
+    for (Student st : students) {
+        int studentId = st.getId();
+        if (studentId > maxId) {
+            maxId = studentId;
+        }
+    }
+    System.out.println(maxId+1);
+    return maxId+1;
+}
+
 
   public void add(Student student) {
-    student.setId(idCounter++);
+    student.setId(updateID());
     students.add(student);
     rank();
     try {
