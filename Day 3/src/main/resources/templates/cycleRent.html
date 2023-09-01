@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.cycle-details{
+		display: flex;
+	}
+	.cycle-details div {
+		margin-right: 20px;
+	}
+</style>
+</head>
+<body>
+	<div class="cycle-details">
+
+<div>
+	<p>RENT CYCLE</p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Available</th>
+                 <th>Select</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cycle : ${borrowCycleList}">
+                <td th:text="${cycle.id}"></td>
+                <td th:text="${cycle.name}"></td>
+                <td th:text="${cycle.color}"></td>
+                <td th:text="${cycle.available}"></td>
+                 <td>
+                    <form method="post" action="#" th:action="@{/cycleRent/rent}">
+                        <input type="hidden" name="selectedCycleId" th:value="${cycle.id}" />
+                        <button type="submit">Borrow</button>
+                    </form>
+                </td> 
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+	<p>All Cycle </p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Available</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cycle : ${cycleList}">
+                <td th:text="${cycle.id}"></td>
+                <td th:text="${cycle.name}"></td>
+                <td th:text="${cycle.color}"></td>
+                <td th:text="${cycle.available}"></td>
+<!--                 <td>-->
+<!--                    <form method="post" action="#" th:action="@{/cycleRent/rent}">-->
+<!--                        <input type="hidden" name="selectedCycleId" th:value="${cycle.id}" />-->
+<!--                        <button type="submit">Borrow</button>-->
+<!--                    </form>-->
+<!--                </td> -->
+            </tr>
+        </tbody>
+    </table>
+    <form method="post" action="#" th:action="@{/cycleRent/add}" th:object="${cycleForm}">
+<!--		<label for="cycleId">Content</label>-->
+<!--		<input type="text" id="cycleId" name="cycleId" th:field="*{id}">-->
+<!--		<label for="cycleName">Name</label>-->
+		<input type="text" id="cycleName" name="cycleName" th:field="*{name}" placeholder="Name">
+<!--		<label for="cycleColor">Color</label>-->
+		<input type="text" id="cycleColor" name="cycleColor" th:field="*{color}" placeholder="Name">
+		<label for="cycleAvailable">Available</label>
+		<input type="text" id="cycleAvailable" name="cycleAvailable" th:field="*{available}">
+		<input type="submit" value="Create!">
+	</form>
+</div>
+
+<div>
+	<p>RETURN CYCLE</p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Color</th>
+                 <th>Select</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cycle : ${returnCycleList}">
+                <td th:text="${cycle.id}"></td>
+                <td th:text="${cycle.name}"></td>
+                <td th:text="${cycle.color}"></td>
+                <td>
+                    <form method="post" action="#" th:action="@{/cycleRent/return}">
+                        <input type="hidden" name="returnCycleId" th:value="${cycle.id}" />
+                        <button type="submit">Return</button>
+                    </form>
+                </td> 
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+</html>
