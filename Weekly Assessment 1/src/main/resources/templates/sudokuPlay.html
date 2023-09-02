@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Play Game</title>
+<style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: auto;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>Play</h1>
+
+    <table>
+        <tr th:each="row, rowIndex : ${board}">
+		    <td th:each="cell, cellIndex : ${row}" th:text="${cell}" th:attr="data-row=${rowIndex.index}, data-col=${cellIndex.index}"></td>
+		</tr>
+    </table>
+
+<!--	<form method="post" action="#" th:action="@{/sudokuForm/continue}" th:object="${createSudokuBoard}">-->
+
+<!--		<input type="text" id="sudokuRow" name="sudokuRow" th:field="*{sudokuRow}" placeholder="row">-->
+
+<!--		<input type="text" id="sudokuCol" name="sudokuCol" th:field="*{sudokuCol}" placeholder="col">-->
+<!--		<br>		-->
+<!--		<label for="sudokuNum">Available</label>-->
+<!--		<input type="text" id="sudokuNum" name="sudokuNum" th:field="*{sudokuNum}">-->
+<!--		<input type="submit" value="Create!">-->
+<!--	</form>-->
+</body>
+</html>
