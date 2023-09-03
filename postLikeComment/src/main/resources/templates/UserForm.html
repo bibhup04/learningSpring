@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Greetings!</title>
+</head>
+<body>
+	<h1>New user</h1>
+	<form method="post" action="#" th:action="@{/user/add}" th:object="${user}">
+		<label for="name">User name</label>
+		<input type="text" id="name" th:field="*{userName}">
+		<input type="submit" value="Add user!">
+	</form>
+	<h1>Login</h1>
+<!--	<form method="post" action="#" th:action="@{/user/home}" th:object="${user}">-->
+<!--		<label for="name">User name</label>-->
+<!--		<input type="text" id="name" th:field="*{userName}">-->
+<!--		<input type="submit" value="Log In">-->
+<!--	</form>-->
+<!--method="post" th:action="@{/user/{id}(id=${userOption.userId})}"-->
+	<form method="post" th:action="@{/user}">
+	    <label for="userdropn">Select your username</label>
+	    <select id="userdropdown" name="userId">
+	        <option th:each="userOption : ${userList}" th:value="${userOption.userId}" th:text="${userOption.userName}"></option>
+	    </select>
+	    <input type="submit" value="Log In">
+	</form>
+
+
+	
+</body>
+</html>
