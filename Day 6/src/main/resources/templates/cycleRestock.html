@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <div>
+        <p>RESTOCK CYCLE</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>WithMechanic</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cycle : ${restockCycleList}">
+                    <td th:text="${cycle.id}"></td>
+                    <td th:text="${cycle.name}"></td>
+                    <td th:text="${cycle.restockCycle}"></td>
+                    <td>
+                        <form method="get" action="#" th:action="@{'/restock/'+ ${cycle.id}}">
+                            <input type="number" name="restockCycle" value="1"/>
+                            <button type="submit">Restock</button>
+                        </form>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Define your CSS styles here */
+        .register {
+            display: none; /* Initially hide the registration form */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login">
+        <h1>Login</h1>
+        <form method="post"  th:action="@{/restock/login}" th:object="${loginUser}">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" th:field="*{userId}"required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" th:field="*{password}"required>
+            <br>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <button id="showRegister">Register here</button></p>
+        </div>
+        <div class="register">
+            <h1>Register</h1>
+            <form method="post" onsubmit="return checkPassword();" th:action="@{/registerUser}" >
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <br>
+                <label for="registerPassword">Password:</label>
+                <input type="password" id="registerPassword" name="registerPassword" required>
+                <br>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <br>
+                <button type="submit">Register</button>
+                <p>Already have an account? <button id="showLogin">Login</button></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const showRegisterButton = document.getElementById("showRegister");
+        const registerForm = document.querySelector(".register");
+        const loginForm = document.querySelector(".login");
+        const showLoginButton = document.getElementById("showLogin");
+    
+        showRegisterButton.addEventListener("click", () => {
+            registerForm.style.display = "block";
+            loginForm.style.display = "none";
+        });
+    
+        showLoginButton.addEventListener("click", () => {
+            loginForm.style.display = "block";
+            registerForm.style.display = "none";
+        });
+    
+        function checkPassword() {
+            const password = document.getElementById("registerPassword").value.trim();
+            const confirmPassword = document.getElementById("confirmPassword").value.trim();
+            console.log(password)
+            console.log("and")
+            console.log(confirmPassword)
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false; 
+            }
+
+            return true; 
+        }
+    </script>
+</body>
+</html>

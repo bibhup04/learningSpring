@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.cycle-details{
+		display: flex;
+	}
+	.cycle-details div {
+		margin-right: 20px;
+	}
+	.cycle-details {
+    display: flex;
+}
+
+/* Define styles for individual divs inside .cycle-details */
+.cycle-details div {
+    margin-right: 20px;
+}
+
+/* Define styles for tables and table headers */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+/* Define styles for table headers (th) */
+th {
+    background-color: #f2f2f2;
+}
+
+/* Define styles for form labels and input elements */
+label {
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+/* Define styles for buttons */
+button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Add hover effect to buttons */
+button:hover {
+    background-color: #0056b3;
+}
+
+</style>
+
+</head>
+<body>
+	<div class="cycle-details">
+
+<div>
+	<p>RENT CYCLE</p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Available</th>
+                 <th>Select</th>
+                 <th>OutOfOrder</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cycle : ${availableCycleList}">
+                <td th:text="${cycle.id}"></td>
+                <td th:text="${cycle.name}"></td>
+                <td th:text="${cycle.availableCycle}"></td>
+                 <td>
+                    <form method="get" action="#" th:action="@{'/borrow/'+ ${cycle.id}}">
+
+                        <button type="submit">Borrow</button>
+                    </form>
+                </td> 
+                <td>
+                    <form method="get" action="#" th:action="@{'/Garage/'+ ${cycle.id}}">
+
+                        <button type="submit">Mechanic</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+	<p>All Cycle </p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Total</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cycle : ${cycleList}">
+                <td th:text="${cycle.id}"></td>
+                <td th:text="${cycle.name}"></td>
+                <td th:text="${cycle.availableCycle + cycle.borrowedCycle + cycle.restockCycle}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <h1>Add cycle</h1>
+    <form method="post" action="#" th:action="@{/cycleRent/add}" th:object="${cycleForm}">
+
+		<label for="name">Name</label>
+		<input type="text" id="name" name="name" th:field="*{name}" placeholder="Name">
+		<br>
+		<label for="availableCycle">AvailableQuantity</label>
+		<input type="number" id="availableCycle" name="availableCycle" th:field="*{availableCycle}" placeholder="Name">
+		<br>
+		<label for="borrowedCycle">BorrowedQuantity</label>
+		<input type="number" id="borrowedCycle" name="borrowedCycle" value="1" th:field="*{borrowedCycle}">
+		<br>
+		<input type="submit" value="Add!">
+	</form>
+</div>
+
+<div>
+	<p>RETURN CYCLE</p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Borrowed</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cycle : ${borrowedCycleList}">
+                <td th:text="${cycle.id}"></td>
+                <td th:text="${cycle.name}"></td>
+                <td th:text="${cycle.borrowedCycle}"></td>
+                <td>
+                    <form method="get" action="#" th:action="@{'/return/'+ ${cycle.id}}">
+                        <button type="submit">Return</button>
+                    </form>
+                </td> 
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>
