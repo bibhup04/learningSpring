@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.cycle-details{
+		display: flex;
+	}
+	.cycle-details div {
+		margin-right: 20px;
+	}
+</style>
+</head>
+<body>
+	<div class="cycle-details">
+
+<div>
+	<p>RENT CYCLE</p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>AvailableCycle</th>
+                 <th>Select</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cycle : ${availableCycleList}">
+                <td th:text="${cycle.id}"></td>
+                <td th:text="${cycle.name}"></td>
+                <td th:text="${cycle.availableCycle}"></td>
+                 <td>
+                    <form method="get" action="#" th:action="@{'/borrow/'+ ${cycle.id}}">
+<!--                        <input type="hidden" name="selectedCycleId" th:value="${cycle.id}" />-->
+                        <button type="submit">Borrow</button>
+                    </form>
+                </td> 
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+	<p>All Cycle </p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>AvailableQuantity</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cycle : ${cycleList}">
+                <td th:text="${cycle.id}"></td>
+                <td th:text="${cycle.name}"></td>
+                <td th:text="${cycle.availableCycle}"></td>
+
+            </tr>
+        </tbody>
+    </table>
+    <h1>Add cycle</h1>
+    <form method="post" action="#" th:action="@{/cycleRent/add}" th:object="${cycleForm}">
+
+		<label for="name">Name</label>
+		<input type="text" id="name" name="name" th:field="*{name}" placeholder="Name">
+		<br>
+		<label for="availableCycle">AvailableQuantity</label>
+		<input type="number" id="availableCycle" name="availableCycle" th:field="*{availableCycle}" placeholder="Name">
+		<br>
+		<label for="borrowedCycle">BorrowedQuantity</label>
+		<input type="number" id="borrowedCycle" name="borrowedCycle" value="1" th:field="*{borrowedCycle}">
+		<br>
+		<input type="submit" value="Add!">
+	</form>
+</div>
+
+<div>
+	<p>RETURN CYCLE</p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>BorrowedQuantity</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cycle : ${borrowedCycleList}">
+                <td th:text="${cycle.id}"></td>
+                <td th:text="${cycle.name}"></td>
+                <td th:text="${cycle.borrowedCycle}"></td>
+                <td>
+                    <form method="get" action="#" th:action="@{'/return/'+ ${cycle.id}}">
+                        <input type="number" name="returnCycleId" value="1"/>
+                        <button type="submit">Return</button>
+                    </form>
+                </td> 
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!--<div>-->
+<!--	<p>RESTOCK CYCLE</p>-->
+<!--    <table>-->
+<!--        <thead>-->
+<!--            <tr>-->
+<!--                <th>ID</th>-->
+<!--                <th>Name</th>-->
+<!--                <th>QuantityWithMechanic</th>-->
+<!--                <th>Quantity</th>-->
+<!--            </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--            <tr th:each="cycle : ${borrowedCycleList}">-->
+<!--                <td th:text="${cycle.id}"></td>-->
+<!--                <td th:text="${cycle.name}"></td>-->
+<!--                <td th:text="${cycle.borrowedCycle}"></td>-->
+<!--                <td>-->
+<!--                    <form method="get" action="#" th:action="@{'/restock/'+ ${cycle.id}}">-->
+<!--                        <input type="number" name="returnCycleId" value="1"/>-->
+<!--                        <button type="submit">Return</button>-->
+<!--                    </form>-->
+<!--                </td> -->
+<!--            </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
+</div>
+</body>
+</html>
