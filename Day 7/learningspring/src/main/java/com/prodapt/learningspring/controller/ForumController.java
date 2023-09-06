@@ -64,7 +64,7 @@ public class ForumController {
           return "redirect:/loginpage";
       } 
     model.addAttribute("postForm", new AddPostForm());
-    userRepository.findAll().forEach(user -> userList.add(user));
+//userRepository.findAll().forEach(user -> userList.add(user));
     model.addAttribute("userName", this.loggedInUser.getLoggedInUser().getName());
     model.addAttribute("authorid", 0);
     return "forum/postForm";
