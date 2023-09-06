@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        body {
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .left-sidebar,
+        .right-sidebar {
+            width: 20%;
+            background-color: lightgray; /* Optional: Set background color for sidebars */
+        }
+
+        .content {
+            flex-grow: 1; /* Take up remaining space */
+            background-color: #f0f0f0; /* Optional: Set background color for content */
+        }
+
+        /* Optional: Style the form */
+        .add-post form {
+            padding: 20px;
+        }
+
+        /* Optional: Style the textarea */
+        .add-post textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        /* Optional: Style the submit button */
+        .add-post input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .post {
+        background-color: #fff; /* Set background color for the post */
+        border: 1px solid #ddd; /* Add a border around the post */
+        padding: 20px; /* Add padding to create spacing */
+        margin: 10px 0; /* Add margin to separate posts vertically */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for a card-like effect */
+    }
+    
+        .post-content {
+        font-size: 16px; /* Set the font size for the post message */
+        line-height: 1.4; /* Set line height for better readability */
+    }
+    
+    .post-author {
+        margin-top: 10px; /* Add some space between post content and author info */
+        font-size: 14px; /* Set font size for author info */
+        color: #555; /* Set text color for author info */
+    }
+    
+    .comment-item {
+        background-color: #f0f0f0; /* Set background color for comments */
+        padding: 10px; /* Add padding to comments */
+        margin: 10px 0; /* Add margin to separate comments */
+    }
+    </style>
+</head>
+<body >
+    <div class="container">
+        <div class="left-sidebar">
+            <!-- Left sidebar content -->
+        </div>
+        <div class="content">
+            <div class="add-post" >
+				<h1>Hey <span th:text="${user.userName}">John Doe</span></h1>
+                <form  th:action="@{'/user/' + ${user.userId} + '/home/addPost'}" method="post">
+                    <textarea name="message" rows="4" cols="50" placeholder="Write something..."></textarea>
+                    <br>
+                    <input type="submit" value="Post!">
+                </form>
+            </div>
+            <div>
+	            <h1>List of Posts</h1>
+	            <div th:each="post, postIndex : ${postList}">
+			        <div class="post">
+			            <p th:text="${post.postText}"></p>
+			            <p>Author: <span th:text="${post.user.userName}"></span></p>
+			            <p>Likes: <span th:text="${likeList.get(__${postIndex.index}__)}">0</span></p>
+			            <form  th:action="@{'/user/' + ${user.userId} + '/post/'+ ${post.postId} +'/like'}" method="post">
+			            	<button class="emoji-button">&#x1F44D; Like</button>
+			            </form>
+			            <form th:action="@{'/user/' + ${user.userId} + '/post/' + ${post.postId} + '/comment'}" method="post">
+						    <input type="text" name="comment" placeholder="Add a comment" />
+						    <button type="submit">Submit</button>
+						</form>
+						<div class="prev-comments">
+							<h3>Comments</h3>
+					        <ul>
+					            <li th:each="comment : ${commentList}" th:if="${comment.post.postId == post.postId and comment.parent == null}">
+					                <p th:text="${comment.commentText}"></p>
+					                <p>Comment by: <span th:text="${comment.user.userName}"></span></p>
+					                <form th:action="@{'/user/' + ${user.userId} + '/post/' + ${post.postId} + '/comment/' + ${comment.commentId} +'/reply'}" method="post">
+									    <input type="text" name="Reply" placeholder="Reply to comment" />
+									    <button type="submit">Submit</button>
+									</form>
+									<h4>Reply</h4>
+							        <ul style="margin-left: 20px;">
+							            <li th:each="repl : ${replyList}" th:if="${repl.parent != null and repl.parent.commentId == comment.commentId}">
+							                <p> <span th:text="${repl.commentText}"></span>, ( by: <span th:text="${repl.user.userName}"></span> )</p>
+							            </li>
+							        </ul>
+					            </li>
+					        </ul>
+						</div>
+
+			        </div>
+		        </div>
+        	</div>
+        </div>
+        <div class="right-sidebar">
+            <!-- Right sidebar content -->
+        </div>
+        
+	   
+    
+    </div>
+</body>
+</html>
