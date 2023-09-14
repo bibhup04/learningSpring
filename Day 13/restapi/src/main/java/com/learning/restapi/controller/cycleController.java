@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.learning.restapi.entity.Cycle;
-
+import com.learning.restapi.entity.User;
 import com.learning.restapi.entity.addNewCycle;
 
 import com.learning.restapi.service.CycleService;
 import com.learning.restapi.service.DomainUserService;
 import com.learning.restapi.service.RegistrationForm;
+import com.learning.restapi.service.UserService;
 
 
 @RestController
@@ -31,6 +32,9 @@ public class cycleController {
 
     @Autowired
     private DomainUserService domainUserService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/health")
     public String checkhealth() {
@@ -82,27 +86,31 @@ public class cycleController {
         return cycleService.listCycles();
     }
 
-    //  @PostMapping("/register")
-    // public String register(@ModelAttribute("registrationForm") RegistrationForm registrationForm, 
-    // BindingResult bindingResult, 
-    // RedirectAttributes attr) {
-    //     System.out.println("id:" + registrationForm.getUsername());
-    //     System.out.println("id:" + registrationForm.getPassword());
-    //     System.out.println("id:" + registrationForm.getRepeatPassword());
-    //     System.out.println("id:" + registrationForm.getRole());
-    //     if (bindingResult.hasErrors()) {
-    //     attr.addFlashAttribute("org.springframework.validation.BindingResult.registrationForm", bindingResult);
-    //     attr.addFlashAttribute("registrationForm", registrationForm);
-    //     return "redirect:/register";
-    //     }
-    //     if (!registrationForm.isValid()) {
-    //     attr.addFlashAttribute("message", "Passwords must match");
-    //     attr.addFlashAttribute("registrationForm", registrationForm);
-    //     return "redirect:/register";
-    //     }
-    //     System.out.println(domainUserService.save(registrationForm.getUsername(), registrationForm.getPassword(), registrationForm.getRole()));
-    //     attr.addFlashAttribute("result", "Registration success!");
-    //     return "redirect:/login";
-    // }
+ 
+
+ 
+
+    @PostMapping("/post/register")
+    public ResponseEntity<String> registerUser(@RequestBody RegistrationForm registrationForm) {
+        try {
+            registrationForm.getUsername();
+            if (domainUserService.getByName(registrationForm.getUsername()) == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
+            }
+            if(!registrationForm.getPassword().equals(registrationForm.getRepeatPassword())){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password doesnot match");
+            }
+
+            System.out.println(domainUserService.save(registrationForm.getUsername(), registrationForm.getPassword(), registrationForm.getRole()));
+           
+            return ResponseEntity.ok("User registered successfully");
+        
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed: " + e.getMessage());
+        }
+
+    }
+
+ 
     
 }
