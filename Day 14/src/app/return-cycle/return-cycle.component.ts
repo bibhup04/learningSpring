@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import { ApiserviceService } from '../service';
 import { HttpClient } from '@angular/common/http';
+import { cycle, cycleList } from '../cycle-interface';
+
 
 @Component({
   selector: 'app-return-cycle',
   templateUrl: './return-cycle.component.html',
-  styleUrls: ['./return-cycle.component.css']
+  styleUrls: ['../cycle-list/cycle-list.component.css']
 })
 export class ReturnCycleComponent {
   title = 'cycle-return';
-  newdata: any;
+  newdata: cycleList[] = [];
 
   constructor(
     private _apiserver: ApiserviceService,
@@ -19,9 +21,9 @@ export class ReturnCycleComponent {
   ngOnInit() {
     this._apiserver.getData().subscribe(
       (res) => {
-        this.newdata = res;
-        console.log('Success: Response from API:', this.newdata);
-      },
+          this.newdata = res.filter(item => item.numBorrowed > 0);
+          console.log('Success: Response from API:', this.newdata);
+       },
       (error) => {
         console.error('Error: Failed to fetch data from API:', error);
       }

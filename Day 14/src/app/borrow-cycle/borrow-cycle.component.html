@@ -16,7 +16,6 @@
             <th>Borrow</th>
             <th>Available</th>
             <th>Borrow</th>
-            <th>Return</th>
           </tr>
         </thead>
         <tbody>
@@ -27,7 +26,6 @@
             <td>{{ item.numBorrowed }}</td>
             <td>{{ item.numAvailable }}</td>
             <td><button (click)="borrowCycle(item.id)">Borrow</button></td>
-            <td><button (click)="returnCycle(item.id)">Return</button></td>
           </tr>
         </tbody>
       </table>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiserviceService } from '../service';
+import { cycleList } from '../cycle-interface';
 
 @Component({
   selector: 'app-cycle-list',
@@ -8,7 +9,8 @@ import { ApiserviceService } from '../service';
 })
 export class CycleListComponent {
   title = 'cycle-list';
-  newdata:any;
+  newdata: cycleList[] = [];
+
 
   constructor(private _apiserver:ApiserviceService){}
 

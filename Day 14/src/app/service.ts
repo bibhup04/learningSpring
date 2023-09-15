@@ -1,16 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { cycle } from './cycle-interface';
+import { addNewCycle , cycleList} from './cycle-interface';
 
-interface cycle {
-  id: number;
-  count: number;
-}
+// interface cycle {
+//   id: number;
+//   count: number;
+// }
 
-interface addNewCycle {
-  brand: string;
-  stock: number;
-}
+// interface addNewCycle {
+//   brand: string;
+//   stock: number;
+// }
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +23,8 @@ export class ApiserviceService {
 
   private apiUrl = 'http://localhost:8080/api/cycle';
 
-  getData() {
-    return this._http.get(`${this.apiUrl}/list`);
+  getData() : Observable<cycleList[]> {
+    return this._http.get<cycleList[]>(`${this.apiUrl}/list`);
   }
 
   borrowCycle(data: cycle): Observable<any> {

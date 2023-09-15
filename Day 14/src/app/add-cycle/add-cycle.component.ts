@@ -25,6 +25,8 @@ export class AddCycleComponent {
     this._apiserver.addCycle(cycleData).subscribe(
         response => {
           console.log('Cycle added successfully:', response);
+          this.cycleBrand = "";
+          this.stock = 0;
         },
         error => {
           console.error('Error adding cycle:', error);
@@ -42,6 +44,8 @@ export class AddCycleComponent {
         response => {
           console.log('Cycle restock successfully:', response);
           console.log('amount', restockData)
+          this.id = 0;
+          this.count = 0;
         },
         error => {
           console.error('Error in cycle restock:', error);
