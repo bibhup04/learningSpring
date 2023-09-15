@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cycle List</title>
+</head>
+<body>
+    <h1>All Cycle List</h1>
+    <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Brand</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of newdata">
+            <td>{{ item.id }}</td>
+            <td>{{ item.brand }}</td>
+            <td>{{ item.stock }}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+</body>
+</html>

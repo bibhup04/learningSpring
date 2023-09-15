@@ -1,0 +1,49 @@
+/* styles.css */
+
+/* Apply a margin and padding to the body for spacing */
+body {
+    margin: 20px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Style the form container */
+  .form-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  /* Style form labels */
+  label {
+    font-weight: bold;
+  }
+  
+  /* Style form input fields */
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Style the submit buttons */
+  .btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Change button color on hover */
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  

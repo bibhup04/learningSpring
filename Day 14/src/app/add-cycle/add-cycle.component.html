@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="form-container">
+        <h3>Add cycle</h3>
+        <form (submit)="submitForm()">
+            <div class="form-group">
+                <label for="brand">Cycle Brand:</label>
+                <input type="text" id="brand" name="brand" class="form-control" [(ngModel)]="cycleBrand" required />
+            </div>
+            <div class="form-group">
+                <label for="stock">Quantity:</label>
+                <input type="text" id="color" name="color" class="form-control" [(ngModel)]="stock" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <h3>Restock Cycle</h3>
+        <form (submit)="restockForm()">
+            <div class="form-group">
+                <label for="id">Cycle id:</label>
+                <input type="text" id="id" name="id" class="form-control" [(ngModel)]="id" required />
+            </div>
+            <div class="form-group">
+                <label for="count">count:</label>
+                <input type="text" id="count" name="count" class="form-control" [(ngModel)]="count" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>
