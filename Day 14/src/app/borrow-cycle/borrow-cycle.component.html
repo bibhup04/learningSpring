@@ -6,15 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>All Cycle List</h1>
+  <h1>Borrow Cycle</h1>
     <table>
         <thead>
           <tr>
             <th>ID</th>
             <th>Brand</th>
             <th>Stock</th>
-            <th>Borrow</th>
+            <!-- <th>Borrow</th> -->
             <th>Available</th>
+            <th>Quantity</th>
             <th>Borrow</th>
           </tr>
         </thead>
@@ -23,8 +24,9 @@
             <td>{{ item.id }}</td>
             <td>{{ item.brand }}</td>
             <td>{{ item.stock }}</td>
-            <td>{{ item.numBorrowed }}</td>
+            <!-- <td>{{ item.numBorrowed }}</td> -->
             <td>{{ item.numAvailable }}</td>
+            <input type="text" id="count" name="count" [(ngModel)]="count" required />
             <td><button (click)="borrowCycle(item.id)">Borrow</button></td>
           </tr>
         </tbody>

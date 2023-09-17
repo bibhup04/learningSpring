@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { CycleListComponent } from './cycle-list/cycle-list.component';
 import { BorrowCycleComponent } from './borrow-cycle/borrow-cycle.component';
 import { ReturnCycleComponent } from './return-cycle/return-cycle.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 
 
@@ -19,6 +20,7 @@ import { ReturnCycleComponent } from './return-cycle/return-cycle.component';
     CycleListComponent,
     BorrowCycleComponent,
     ReturnCycleComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>All Cycle List</h1>
+    <h1>Return Cycle</h1>
     <table>
         <thead>
           <tr>
@@ -14,7 +14,7 @@
             <th>Brand</th>
             <th>Stock</th>
             <th>Borrow</th>
-            <th>Available</th>
+            <!-- <th>Available</th> -->
             <th>Return</th>
           </tr>
         </thead>
@@ -24,7 +24,7 @@
             <td>{{ item.brand }}</td>
             <td>{{ item.stock }}</td>
             <td>{{ item.numBorrowed }}</td>
-            <td>{{ item.numAvailable }}</td>
+            <!-- <td>{{ item.numAvailable }}</td> -->
             <td><button (click)="returnCycle(item.id)">Return</button></td>
           </tr>
         </tbody>

@@ -6,7 +6,7 @@ import { BorrowCycleComponent } from './borrow-cycle/borrow-cycle.component';
 import { ReturnCycleComponent } from './return-cycle/return-cycle.component';
 
 const routes: Routes = [
-  { path: '', component: CycleListComponent },
+  { path: 'home', component: CycleListComponent },
   { path: 'add', component: AddCycleComponent },
   { path: 'borrow', component: BorrowCycleComponent},
   { path: 'return', component: ReturnCycleComponent},

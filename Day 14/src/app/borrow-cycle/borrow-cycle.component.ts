@@ -11,6 +11,8 @@ import { cycleList } from '../cycle-interface';
 export class BorrowCycleComponent {
   title = 'cycle-list';
   newdata: cycleList[] = [];
+  count : number = 1;
+  
 
 
   constructor(
@@ -33,7 +35,7 @@ export class BorrowCycleComponent {
   borrowCycle(cycleId: number) {
     const cycleBorrow = {
       id: cycleId,
-      count: 1,
+      count: this.count,
     };
     this._apiserver.borrowCycle(cycleBorrow)
     .subscribe(
@@ -41,6 +43,7 @@ export class BorrowCycleComponent {
           console.log('Cycle borrow successfully:', cycleId);
           console.log('Response:', response);
           this.ngOnInit();
+          this.count = 1;
          },
          (error) => {
            console.error('Error in cycle borrow:', error);
