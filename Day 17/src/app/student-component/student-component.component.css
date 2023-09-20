@@ -1,0 +1,12 @@
+.student-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd; /* Add a border to the table itself */
+  }
+
+  .student-table th,
+.student-table td {
+  border: 1px solid #ddd; /* Add borders to table header cells and table data cells */
+  padding: 8px; /* Add padding to improve spacing */
+  text-align: left; /* Align text to the left within cells */
+}
