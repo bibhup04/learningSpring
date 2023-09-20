@@ -1,0 +1,33 @@
+<div class="Game-container">
+    <h1>Tennis Tournament</h1>
+
+    <div class="overlay" *ngIf="gameWon">
+        <div class="winner-overlay">
+            {{ winnerName }} has won the game!;
+            <br>
+          <button (click)="restartGame()">&#x21bb;</button>
+        </div>
+      </div>
+      
+
+        <div class="grid-container">
+            <div class="grid-item"><input type="text" [(ngModel)]="player1Name" name="player1Name" #player1Input></div> 
+            <div class="grid-item"> {{ tennis.p1.getScore() }} </div>
+            <div class="grid-item"> {{ tennis.p1.getGamesWon() }} </div>
+            <div class="grid-item"> {{ tennis.p1.getSetsWon() }}</div>
+            <div class="grid-item">PLAYERS</div>
+            <div class="grid-item">SCORE</div>
+            <div class="grid-item">GAME WON</div>
+            <div class="grid-item">SET WON</div>
+            <div class="grid-item"><input type="text" [(ngModel)]="player2Name" name="player2Name" #player2Input></div>
+            <div class="grid-item"> {{ tennis.p2.getScore() }} </div>
+            <div class="grid-item"> {{ tennis.p2.getGamesWon() }} </div>
+            <div class="grid-item"> {{ tennis.p2.getSetsWon() }}</div>
+        </div>
+        <div class="button-container">
+            <button type="button" (click)="playerWon('Player 1')" [disabled]="gameWon" class="player-button">{{ player1Name }}</button>
+            <div class="button-space"></div>
+            <button type="button" (click)="playerWon('Player 2')" [disabled]="gameWon" class="player-button">{{ player2Name }}</button>
+          </div>
+          
+</div>
