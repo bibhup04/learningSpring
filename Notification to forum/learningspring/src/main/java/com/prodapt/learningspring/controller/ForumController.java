@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.prodapt.learningspring.aspect.LogNotification;
 import com.prodapt.learningspring.controller.binding.AddPostForm;
+import com.prodapt.learningspring.controller.binding.NotificationData;
 import com.prodapt.learningspring.controller.exception.ResourceNotFoundException;
 import com.prodapt.learningspring.entity.LikeRecord;
 import com.prodapt.learningspring.entity.Notification;
@@ -29,13 +31,11 @@ import com.prodapt.learningspring.entity.User;
 import com.prodapt.learningspring.model.RegistrationForm;
 import com.prodapt.learningspring.repository.CommentRepository;
 import com.prodapt.learningspring.repository.LikeCRUDRepository;
-import com.prodapt.learningspring.repository.NotificationRepository;
 import com.prodapt.learningspring.repository.PostRepository;
 import com.prodapt.learningspring.repository.UserRepository;
 import com.prodapt.learningspring.service.DomainUserService;
 import com.prodapt.learningspring.service.NotificationService;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.ServletException;
 
 @Controller
@@ -60,12 +60,6 @@ public class ForumController {
   @Autowired
   private NotificationService notificationService;
 
-  // private List<User> userList;
-  
-  // @PostConstruct
-  // public void init() {
-  //   userList = new ArrayList<>();
-  // }
 
   @GetMapping("/post/form")
   public String getPostForm(Model model, @AuthenticationPrincipal UserDetails userDetails) {
@@ -77,14 +71,16 @@ public class ForumController {
     return "forum/postForm";
   }
   
+  @LogNotification
   @PostMapping("/post/add")
-  public String addNewPost(@ModelAttribute("postForm") AddPostForm postForm, BindingResult bindingResult, RedirectAttributes attr) throws ServletException {
+  public String addNewPost(@ModelAttribute("postForm") AddPostForm postForm, BindingResult bindingResult,@AuthenticationPrincipal UserDetails userDetails,RedirectAttributes attr) throws ServletException {
     if (bindingResult.hasErrors()) {
       System.out.println(bindingResult.getFieldErrors());
       attr.addFlashAttribute("org.springframework.validation.BindingResult.post", bindingResult);
       attr.addFlashAttribute("post", postForm);
       return "redirect:/forum/post/form";
     }
+    
     Optional<User> user = userRepository.findById(postForm.getUserId());
     if (user.isEmpty()) {
       throw new ServletException("Something went seriously wrong and we couldn't find the user in the DB");
@@ -94,16 +90,12 @@ public class ForumController {
     post.setContent(postForm.getContent());
     postRepository.save(post);
 
-    notificationService.createNotification(user.get(), post, "POST", "You added a post (" + postForm.getContent() + ").");
+    String message = "You added a post (" + postForm.getContent() + ").";
 
-  //  Notification notification = new Notification();
-  //  notification.setPost(post);
-  //  notification.setUser(user.get());
-
-  //  notificationRepository.save(notification);
-    
     return String.format("redirect:/forum/post/%d", post.getId());
   }
+
+
   
   @GetMapping("/post/{id}")
   public String postDetail(@PathVariable int id, Model model, @AuthenticationPrincipal UserDetails userDetails) throws ResourceNotFoundException {
@@ -125,91 +117,59 @@ public class ForumController {
     return "forum/postDetail";
   }
   
+  @LogNotification
   @PostMapping("/post/{id}/like")
-  public String postLike(@PathVariable int id, String likerName, RedirectAttributes attr, @AuthenticationPrincipal UserDetails userDetails) {
+  public String postLike(@PathVariable int id, String likerName, RedirectAttributes attr, @AuthenticationPrincipal UserDetails userDetails) throws ResourceNotFoundException {
+    
     LikeId likeId = new LikeId();
     likeId.setUser(userRepository.findByName(userDetails.getUsername()).get());
     likeId.setPost(postRepository.findById(id).get());
+    Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
     LikeRecord like = new LikeRecord();
     like.setLikeId(likeId);
     likeCRUDRepository.save(like);
 
-    notificationService.createNotification(postRepository.findById(id).get().getAuthor(), postRepository.findById(id).get(), "LIKE", userDetails.getUsername() + " liked your post (" + postRepository.findById(id).get().getContent() + ").");
-
-  // Notification notification = new Notification();
-  //  notification.setUser(userRepository.findByName(likerName).get());
-  //  notification.setPost(postRepository.findById(id).get());
-  //  notification.setLikeRecord(like);
-
-  //  notificationRepository.save(notification);
+    
 
     return String.format("redirect:/forum/post/%d", id);
   }
 
-@PostMapping("/post/{postId}/comment")
-	    public String submitComment(@PathVariable int postId,  @RequestParam String comment,@AuthenticationPrincipal UserDetails userDetails) throws ResourceNotFoundException  {
- 
+  @LogNotification
+  @PostMapping("/post/{postId}/comment")
+  public String submitComment(@PathVariable int postId,  @RequestParam String comment,@AuthenticationPrincipal UserDetails userDetails) throws ResourceNotFoundException  {
 
-	        System.out.println("Post ID: " + postId);
-	        System.out.println("Comment: " + comment);
-	         
-	        Comment newComment = new Comment();
-	        newComment.setCommentText(comment);
+             
+          Comment newComment = new Comment();
+          newComment.setCommentText(comment);
+  
+           // User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+           newComment.setUser(userRepository.findByName(userDetails.getUsername()).get());
+  
+          Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+          newComment.setPost(post);
+          commentRepository.save(newComment);
+           
+         
+  
+            return String.format("redirect:/forum/post/%d", postId);
+        }
 
-	       // User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-	        newComment.setUser(userRepository.findByName(userDetails.getUsername()).get());
+  @LogNotification
+  @PostMapping("/post/{postId}/comment/{commentId}/reply")
+  public String postReply( @PathVariable("postId") int postId, @PathVariable("commentId") int commentId, @RequestParam("Reply") String replyText, @RequestParam("commenterId") int userId, @AuthenticationPrincipal UserDetails userDetails
+   ) throws ResourceNotFoundException   {  
+        
+            Comment reply = new Comment();
+            reply.setCommentText(replyText);
+            User user = userRepository.findByName(userDetails.getUsername()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+            reply.setUser(user);
+            Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+            reply.setPost(post);      
+            reply.setParent(commentRepository.findById(commentId).get());
+            commentRepository.save(reply);
 
-	        Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
-	        newComment.setPost(post);
-	        commentRepository.save(newComment);
-
-          
-        notificationService.createNotification(postRepository.findById(postId).get().getAuthor(), post, "COMMENT", userDetails.getUsername() + " commented on your post (" + post.getContent() + ").");
-          //  Notification notification = new Notification();
-          //   notification.setUser(userRepository.findByName(userDetails.getUsername()).get());
-          //   notification.setPost(postRepository.findById(postId).get());
-          //   notification.setComment(newComment);
-          //   notificationRepository.save(notification);
-
-	        return String.format("redirect:/forum/post/%d", postId);
-	    }
-
-      @PostMapping("/post/{postId}/comment/{commentId}/reply")
-	    public String postReply(
-	            @PathVariable("postId") int postId,
-	            @PathVariable("commentId") int commentId,
-	            @RequestParam("Reply") String replyText,
-              @RequestParam("commenterId") int userId,
-              @AuthenticationPrincipal UserDetails userDetails
-	    ) throws ResourceNotFoundException   {  
-	        // Handle the reply data here
-	        System.out.println("User ID: " + userId);
-	        System.out.println("Post ID: " + postId);
-	        System.out.println("Comment ID: " + commentId);
-	        System.out.println("Reply: " + replyText);
-	        System.out.println("-----------------------------");
-	    
-	        Comment reply = new Comment();
-	        reply.setCommentText(replyText);
-	        User user = userRepository.findByName(userDetails.getUsername()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-	        reply.setUser(user);
-	        Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
-	        reply.setPost(post);      
-	        reply.setParent(commentRepository.findById(commentId).get());
-          commentRepository.save(reply);
-
-          notificationService.createNotification(commentRepository.findById(commentId).get().getUser(), post, "REPLY", userDetails.getUsername() + " replied on your comment (" + commentRepository.findById(commentId).get().getCommentText() + ").");
-          // Notification notification = new Notification();
-          //   notification.setUser(userRepository.findByName(userDetails.getUsername()).get());
-          //   notification.setPost(postRepository.findById(postId).get());
-          //   notification.setComment(commentRepository.findById(commentId).get());
-          //   notification.setReply(reply);
-          //   notificationRepository.save(notification);
-
-
-
-	        return String.format("redirect:/forum/post/%d", postId);
-	    }
+            return String.format("redirect:/forum/post/%d", postId);
+  }
 
 
 
@@ -239,7 +199,7 @@ public class ForumController {
     System.out.println(domainUserService.save(registrationForm.getUsername(), registrationForm.getPassword()));
     attr.addFlashAttribute("result", "Registration success!");
     return "redirect:/login";
-  }
+  } 
 
   @GetMapping("/notification")
   public String notificationPage( Model model, @AuthenticationPrincipal UserDetails userDetails) throws ResourceNotFoundException{
@@ -254,5 +214,18 @@ public class ForumController {
     return "forum/notification";
   }
 
-  
+  @PostMapping("/notification/{postId}")
+  public String handleNotificationForm(@PathVariable("postId") int postId, @RequestParam("notificationId") int notificationId) {
+
+      System.out.println("Received notification ID: " + postId);
+      System.out.println("----------------------------------------");
+        
+      Notification notification = notificationService.findById(notificationId);
+      notification.setView(true);
+      notificationService.save(notification);
+      
+      return String.format("redirect:/forum/post/%d", postId); 
+  }
+
+    
 }

@@ -1,7 +1,7 @@
 package com.prodapt.learningspring.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +23,7 @@ public class NotificationService {
         notification.setPost(post);
         notification.setNotificationType(notificationType);
         notification.setMessage(message);   
+        notification.setView(false);
         notificationRepository.save(notification);
     }
 
@@ -30,4 +31,11 @@ public class NotificationService {
         return notificationRepository.findByUserOrderByCreatedAtDesc(user);
     }
     
+    public Notification findById(int id) {
+        return notificationRepository.findById(id);
+    }
+
+    public Notification save(Notification notification) {
+        return notificationRepository.save(notification);
+    }
 }

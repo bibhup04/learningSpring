@@ -10,4 +10,6 @@ public interface CommentRepository extends CrudRepository<Comment, Integer>{
     
 
     List<Comment> findAll();
+
+    List<Comment> findByPostId(int postId);
 }

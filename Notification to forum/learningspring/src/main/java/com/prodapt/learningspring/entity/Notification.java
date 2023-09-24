@@ -33,6 +33,8 @@ public class Notification {
 
     private String message;
 
+    private boolean view;
+
     @CreationTimestamp
     private Date createdAt;
 }

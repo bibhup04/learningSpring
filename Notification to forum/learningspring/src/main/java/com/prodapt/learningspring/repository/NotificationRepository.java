@@ -19,6 +19,8 @@ public interface NotificationRepository extends CrudRepository<Notification, Int
 
     List<Notification> findAll();
 
+    Notification findById(int id);
+
    // List<Notification> findByPost(postRepository.findById(post.post_id));
 
     // @Query(value = "select n. from notification n join post p on n.post_id  = p.id where p.author_id =?1;")
