@@ -1,0 +1,11 @@
+
+<h3>Products</h3>
+<div class="product-list" *ngFor="let product of products">
+  <div class="product-item">
+    <p>{{ product.name }}</p>
+    <p>Price: {{ product.price | currency:'INR' }}</p>
+    <p>Quantity: {{ product.quantity }}</p>
+    <button (click)="purchase(product)">Purchase</button>
+  </div>
+</div>
+

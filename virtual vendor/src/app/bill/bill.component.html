@@ -1,0 +1,11 @@
+
+<div class="product-list" *ngFor="let item of billData.bill">
+  <div class="product-item">
+    <p>{{ item.productName }}</p>
+    <p>Price: {{ item.price | currency:'INR' }}</p>
+    <p>Quantity: {{ item.quantity }}</p>
+
+  </div>
+</div>
+
+<div >Total Amount: {{ billData.billAmount | currency:'INR'}}</div>

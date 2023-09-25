@@ -1,0 +1,43 @@
+
+<div class="vending-machine">
+    <h2>Vending Machine</h2>
+    
+    <input  class="select-productId-textbox" [(ngModel)]="selectedProductId" placeholder="Enter Product ID" [disabled]="isDoorOpen" />
+    <button class="select-productId-button" (click)="unlockDoor()">Enter</button>
+
+    <div class="sections">
+
+      <app-section class="each-section"
+        *ngFor="let section of sections"
+        [section]="section"
+        (openDoor)="openSection($event)"
+        [isDoorOpen]="isDoorOpen"
+        [isDoorLocked]="section.isDoorLocked"
+        [ngClass]="{'green-section': !section.isDoorLocked}"
+      ></app-section>
+    </div>
+
+    <div *ngIf="isDoorLocked" class="doorLocked">
+        <p>The door is locked. Please unlock it to open.</p>
+    </div>
+  
+    <div *ngIf="isDoorOpen"  class="product-list">
+
+      <app-product-list 
+        [products]="selectedSection?.products"
+        (purchaseProduct)="purchaseProduct($event)"
+      ></app-product-list>
+    </div>
+  
+    <div *ngIf="!isDoorLocked">
+        <button class="door-close-button" (click)="closeDoor()" [disabled]="!isDoorOpen">Close Door</button>
+    </div>
+
+    <!-- <app-bill [bill]="bill"></app-bill> 
+    <app-bill [billAmount]="billAmount"></app-bill> -->
+
+    <app-bill [billData]="{ bill: bill, billAmount: billAmount }"></app-bill>
+
+    
+  </div>
+  

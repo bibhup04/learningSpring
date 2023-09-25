@@ -1,0 +1,22 @@
+
+.product-list {
+    margin-top: 20px;
+  }
+  
+  .product-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .product-item p {
+    margin: 0;
+  }
+  
+
+  .total-amount {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
