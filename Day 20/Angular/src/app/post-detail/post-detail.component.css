@@ -1,0 +1,42 @@
+@import "~font-awesome/css/font-awesome.min.css";
+
+.post-content {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    text-align: left;
+    font-family: Arial, sans-serif;
+  }
+  
+ 
+  /* Optional: Add hover effect */
+  .post-content:hover {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .likecomment{
+    display: flex;
+  }
+
+  .fa-comment {
+    color: rgb(178, 170, 170);
+  }
+
+  .like-comment {
+    display: flex;
+    padding-right: 15px; 
+  }
+
+  .like-comment .comicon {
+    margin-left: 10px; 
+    cursor: pointer;
+  }
+
+.comicon{
+  font-size: 20px;
+}

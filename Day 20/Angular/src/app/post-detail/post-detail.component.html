@@ -1,0 +1,21 @@
+
+<div *ngIf="postDetailResponse" class="post-content">
+
+    <app-post [post]="postDetailResponse.post"></app-post>
+
+    <div class="like-comment">
+        <app-like [likeCount]="postDetailResponse.likeCount"></app-like>
+        
+        <span class="show-comments-icon comicon" (click)="showCommnet()">
+            <i class="fa fa-comment"></i> Comments
+        </span>
+    </div>
+
+    <div *ngIf="displayComment">
+        <app-comment 
+        [comments]="postDetailResponse.commentList"
+        (commentAdded)="addComment($event)"
+        ></app-comment>
+    </div>
+
+</div>

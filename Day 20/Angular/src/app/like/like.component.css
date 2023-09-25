@@ -1,0 +1,20 @@
+@import "~font-awesome/css/font-awesome.min.css";
+.like-button {
+    background: transparent;
+    border: 1px solid transparent;
+
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .like-button .fa-heart {
+    color: transparent; 
+    color: rgb(178, 170, 170);
+    transition: color 0.3s ease-in-out; 
+  }
+  
+  .like-button.liked .fa-heart {
+    color: red; 
+    border-color: red;
+  }
+  

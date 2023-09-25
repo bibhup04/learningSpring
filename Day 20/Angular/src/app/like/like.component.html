@@ -1,0 +1,11 @@
+<div>
+    <button
+    class="like-button"
+    [class.liked]="isLiked"
+    (click)="toggleLike()"
+>
+<i class="fa fa-heart"></i>{{ likeCount }} Likes
+  </button>
+   
+  </div>
+  

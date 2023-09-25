@@ -1,0 +1,86 @@
+@import "~font-awesome/css/font-awesome.min.css";
+
+.user-header {
+    display: flex;
+    justify-content: space-between; 
+    margin-bottom: 5px; 
+  }
+
+  .fa-comment {
+    color: rgb(178, 170, 170);
+  }
+
+.comments {
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .comment-content {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .comment-text {
+    font-size: 1rem;
+    margin-bottom: 5px;
+  }
+  
+  .user-name {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .date-time {
+    font-size: 0.8rem;
+    color: #777;
+  }
+
+  .comicon{
+    margin-left: 10px;
+  }
+
+.fullcommentbox{
+ width: 100%;
+}
+
+.comment-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px; 
+}
+
+
+.newCommentText {
+  flex-grow: 1; 
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.newCommentButton {
+  margin-left: 10px; 
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.newCommentButton:hover {
+  background-color: #0056b3;
+}
+
+.mention-suggestions{
+  cursor: pointer;
+}
+
+  
