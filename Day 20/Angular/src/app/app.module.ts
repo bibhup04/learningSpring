@@ -15,6 +15,7 @@ import { CommentComponent } from './comment/comment.component';
 import { PostComponent } from './post/post.component';
 import { DirectiveNameDirective } from './directive-name.directive';
 import { UserTagDirective } from './user-tag.directive';
+import { MentionTransformPipe } from './mention-transform.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { UserTagDirective } from './user-tag.directive';
     CommentComponent,
     PostComponent,
     DirectiveNameDirective,
-    UserTagDirective
+    UserTagDirective,
+    MentionTransformPipe
   ],
   imports: [
     BrowserModule,

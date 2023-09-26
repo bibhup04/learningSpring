@@ -23,6 +23,7 @@ import com.prodapt.learningspring.model.PostIdRequest;
 import com.prodapt.learningspring.repository.CommentRepository;
 import com.prodapt.learningspring.repository.LikeCRUDRepository;
 import com.prodapt.learningspring.service.CommentService;
+import com.prodapt.learningspring.service.CommentTagService;
 import com.prodapt.learningspring.service.PostService;
 import com.prodapt.learningspring.service.UserService;
 
@@ -42,6 +43,9 @@ public class allPosts {
 
     @Autowired
     private LikeCRUDRepository likeCRUDRepository;
+
+    @Autowired
+    private CommentTagService commentTagService;
 
 
     // @PostMapping("/user")
@@ -82,8 +86,9 @@ public class allPosts {
     public ResponseEntity<String> addComment(@RequestBody CommentDTO commentDTO) {
         
         User user = userService.findUserByName("bibhu").get();
-
+        System.out.println(commentDTO.getTaggedUsers());
         Comment createdComment = commentService.createComment(commentDTO , user);
+        commentTagService.createCommentTagFromList(commentDTO, createdComment);
 
         if (createdComment != null) {
             return ResponseEntity.ok("Comment created successfully");

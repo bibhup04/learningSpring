@@ -16,10 +16,17 @@ public class CommentService {
     private CommentRepository commentRepository;
 
     @Autowired
+    private CommentTagService commentTagService;
+
+    @Autowired
     private PostService postService;
 
     public List<Comment> findByPostId(int postId) {
         return commentRepository.findByPostId(postId);
+    }
+
+    public Comment getCommentById(int commentId) {
+        return commentRepository.findById(commentId).orElse(null);
     }
 
     // public List<Comment> findTopLevelCommentsByPostId(int postId) {
@@ -31,6 +38,8 @@ public class CommentService {
         comment.setCommentText(commentDTO.getCommentText());
         comment.setPost(postService.getPostsById(commentDTO.getPostId()));
         comment.setUser(user);
+
+        //commentTagService.createCommentTagFromList(commentDTO, comment);
         
         return commentRepository.save(comment);
     }

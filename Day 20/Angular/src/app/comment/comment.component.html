@@ -1,33 +1,38 @@
 <div class="fullcommentbox">
-
-    <div class="commentfullbox">
-        <h3 class="comments">COMMENTS</h3>
-        <!-- <div class="comment-input">
+  <div class="commentfullbox">
+    <h3 class="comments">COMMENTS</h3>
+    <!-- <div class="comment-input">
             <input class="newCommentText" [(ngModel)]="newCommentText" placeholder="Enter your comment..." />
             <button class="newCommentButton" (click)="addComment()">Submit</button>
         </div> -->
-        <!-- user-mention.component.html -->
+    <!-- user-mention.component.html -->
 
-        <div class="user-mention">
-            <input id="inputElement" [(ngModel)]="inputText" (input)="onInputChange()" placeholder="Write your message...">
-            <button class="newCommentButton" (click)="addComment()">Submit</button>
-            <div class="mention-suggestions" *ngIf="showSuggestions">
-                <ul>
-                    <li *ngFor="let user of matchedUsers" (click)="mentionUser(user)">{{ user.name }}</li>
-                </ul>
-            </div>
-        </div>
-  
-        
-        <div *ngFor="let comment of comments" class="comment-content">
-            <div class="user-header">
-                <p class="user-name">{{ comment.user.name}}</p>
-                <p class="date-time">{{ comment.createdAt | dateTime}}</p>
-            </div>
-            <h3 class="comment-text">{{ comment.commentText }}</h3>
-            <!-- <div class="comment-text">
-                <span *ngFor="let part of comment.commentText.split(' ')" [appUserTag]="part" [ngClass]="{ 'non-tag': !part.startsWith('@') }"></span>
-              </div> -->
-        </div>
+    <div class="user-mention">
+      <input
+        id="inputElement"
+        [(ngModel)]="inputText"
+        (input)="onInputChange()"
+        placeholder="Write your message..."
+      />
+      <button class="newCommentButton" (click)="addComment()">Submit</button>
+
+      <div class="mention-suggestions" *ngIf="showSuggestions">
+        <ul>
+          <li *ngFor="let user of matchedUsers" (click)="mentionUser(user)">
+            {{ user.name }}
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <div *ngFor="let comment of comments" class="comment-content">
+      <div class="user-header">
+        <p class="user-name">{{ comment.user.name }}</p>
+        <p class="date-time">{{ comment.createdAt | dateTime }}</p>
+      </div>
+      <!-- <h3 class="comment-text">{{ comment.commentText }}</h3> -->
+      <!-- <h3 class="comment-text" [innerHTML]="comment.commentText | mentionTransform"></h3> -->
+      <div class="comment-text" [innerHTML]="comment.commentText | mentionTransform:users"></div>
+    </div>
+  </div>
 </div>

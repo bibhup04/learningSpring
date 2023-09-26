@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiserviceService } from '../service';
-import {Post, User, PostDetailResponse} from '../forum-interface';
+import {Post, CommentData, PostDetailResponse} from '../forum-interface';
 
  
 
@@ -52,20 +52,35 @@ export class PostDetailComponent {
     this.displayComment = !this.displayComment;
   }
 
-  addComment(commentText: string){
-    console.log("comment send parent component", commentText);
-    console.log("Post id", this.postId);
-
-    this._apiserver.sendComment(commentText, this.postId).subscribe(
+  addComment(commentData: CommentData) {
+    commentData.postId= this.postId;
+    console.log('Received Comment Data:', commentData.postId);
+    this._apiserver.sendComment(commentData).subscribe(
       response => {
-        console.log('Comment sent successfully:', response);
-        this.ngOnInit();
-      },
-      error => {
-        console.error('Error sending comment:', error);
+              console.log('Comment sent successfully with tagged users:', response);
+              this.ngOnInit();
+            },
+            error => {
+              console.error('Error sending comment:', error);
+       
+            }
+          );
+        }
+
+  // addComment(commentText: string, taggedUsers: []){
+  //   console.log("comment send parent component", commentText);
+  //   console.log("Post id", this.postId);
+
+  //   this._apiserver.sendComment(commentText, this.postId).subscribe(
+  //     response => {
+  //       console.log('Comment sent successfully:', response);
+  //       this.ngOnInit();
+  //     },
+  //     error => {
+  //       console.error('Error sending comment:', error);
  
-      }
-    );
-  }
+  //     }
+  //   );
+  // }
 
 }

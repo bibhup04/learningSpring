@@ -25,8 +25,14 @@ export interface User {
     commentText: string;
     user: User;
     post: Post;
-    parent: Comment | null; // Allow for null or a Comment object
+    parent: Comment | null; 
     createdAt: Date;
     updatedAt: Date;
+  }
+
+  export interface CommentData {
+    commentText: string;
+    taggedUsers: User[];
+    postId: number;
   }
   

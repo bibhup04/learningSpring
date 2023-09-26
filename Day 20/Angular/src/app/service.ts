@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {Post, User,PostDetailResponse} from './forum-interface';
+import {CommentData, User,PostDetailResponse} from './forum-interface';
+
 
 @Injectable({
     providedIn: 'root',
@@ -20,11 +21,18 @@ import {Post, User,PostDetailResponse} from './forum-interface';
       return this._http.get<User[]>(`${this.apiUrl}/user`);
     }
 
-    sendComment(commentText: string, postId: number): Observable<any> {
-      //const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      const body = { commentText: commentText, postId: postId }; 
+    // sendComment(commentText: string, postId: number): Observable<any> {
+    //   //const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    //   const body = { commentText: commentText, postId: postId }; 
   
-      return this._http.post(`${this.apiUrl}/addComment`, body, {responseType : 'text'});
+    //   return this._http.post(`${this.apiUrl}/addComment`, body, {responseType : 'text'});
+    // }
+
+    sendComment(commentData: CommentData): Observable<any> {
+      //const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      // const body = { commentText: commentText, postId: postId }; 
+  
+      return this._http.post(`${this.apiUrl}/addComment`, commentData, {responseType : 'text'});
     }
   
   }
